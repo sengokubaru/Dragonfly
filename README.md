@@ -20,7 +20,7 @@ The GitHub repositories are shown below.
 <br><p align="right">
 <sub>
 Last updated: 19/04/2026<br>
-[SLSI11], &copy; (2026) [Koji Oshima](mailto:blow_mini@yahoo.co.jp)<br>
-&copy; 2026- Canon Inc. All rights reserved.
+&copy; (2026) [Sengokubaru](mailto:blow_mini@yahoo.co.jp)<br>
+&copy; 2026- All rights reserved.
 </sub>
 </p>
