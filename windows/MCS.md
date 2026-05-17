@@ -179,3 +179,85 @@ TargetValue >= 2 AND TargetValue <= 4
     )
 )
 ```
+
+5. Copilot Studio で動作する実装
+   - まず変数を作る
+```
+levelList = ""
+```
+   - TargetValue を 0〜5 にセットして、6 回同じ条件式を評価する
+```
+If(
+    (
+        IsBlank(OperatorLower)
+        ||
+        Switch(
+            OperatorLower,
+            "greater_or_equal", 0 >= int(NumberLower),
+            "greater_than",     0 >  int(NumberLower),
+            true
+        )
+    )
+    &&
+    (
+        IsBlank(OperatorUpper)
+        ||
+        Switch(
+            OperatorUpper,
+            "less_or_equal", 0 <= int(NumberUpper),
+            "less_than",     0 <  int(NumberUpper),
+            true
+        )
+    ),
+    Set(
+        levelList,
+        If(
+            IsBlank(levelList),
+            "0",
+            levelList & ",0"
+        )
+    )
+)
+```
+   - 同じ処理を TargetValue = 1,2,3,4,5 で繰り返す。
+   - 結果：「2以上4以下」の場合
+     - 0 → false
+     - 1 → false
+     - 2 → true → "2"
+     - 3 → true → "2,3"
+     - 4 → true → "2,3,4"
+     - 5 → false
+   - PA内で以下を実行
+```
+split(triggerOutputs()?['body/levelList'], ',')
+```
+   - 疑似コード
+```
+levelList = ""
+
+For TargetValue in 0..5:
+    If (
+        (IsBlank(OperatorLower) 
+         || Switch(
+                OperatorLower,
+                "greater_or_equal", TargetValue >= int(NumberLower),
+                "greater_than",     TargetValue >  int(NumberLower),
+                true
+            )
+        )
+        &&
+        (IsBlank(OperatorUpper) 
+         || Switch(
+                OperatorUpper,
+                "less_or_equal", TargetValue <= int(NumberUpper),
+                "less_than",     TargetValue <  int(NumberUpper),
+                true
+            )
+        )
+    ):
+        levelList = If(
+            IsBlank(levelList),
+            Text(TargetValue),
+            levelList & "," & Text(TargetValue)
+        )
+```
