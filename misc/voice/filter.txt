@@ -1,0 +1,1 @@
+ffmpeg -i input_ai.wav -af "afftdn=nr=10:nf=-60:tn=1" -ar 16000 -c:a pcm_s16le output_for_ppt.wav
